@@ -15,7 +15,7 @@ public class JwtUtils {
 
     public static String JWT_KEY;
     public static final String HEADER_TYPE = "Authorization";
-    private static final long TOKEN_VALID_TIME = 1L;
+    private static final long TOKEN_VALID_TIME = 6 * 60 * 60 * 1000L;
     private static final String TOKEN_TYPE = "Bearer";
     private static final String BLANK = " ";
     private static final String ID = "id";
