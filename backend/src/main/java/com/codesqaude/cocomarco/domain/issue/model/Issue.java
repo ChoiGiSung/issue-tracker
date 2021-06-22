@@ -80,6 +80,10 @@ public class Issue {
         milestone.addIssue(this);
     }
 
+    public void deleteMilestone() {
+        this.milestone = null;
+    }
+
     public void changeTitle(String title) {
         this.title = title;
     }

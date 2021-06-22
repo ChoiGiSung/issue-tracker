@@ -47,6 +47,8 @@ public class MilestoneService {
 
     @Transactional
     public void delete(Long milestoneId) {
-        milestoneRepository.delete(findById(milestoneId));
+        Milestone milestone = findById(milestoneId);
+        milestone.delete();
+        milestoneRepository.delete(milestone);
     }
 }
