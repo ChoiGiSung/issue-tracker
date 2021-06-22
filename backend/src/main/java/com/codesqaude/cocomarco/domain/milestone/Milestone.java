@@ -26,7 +26,7 @@ public class Milestone {
     private String detail;
     private LocalDate deadLine;
 
-    @OneToMany(mappedBy = "milestone")
+    @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL)
     private List<Issue> issues = new ArrayList<>();
 
     public Milestone(String title, String detail, LocalDate deadLine) {
