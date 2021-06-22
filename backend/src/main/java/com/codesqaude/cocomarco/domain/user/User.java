@@ -1,5 +1,6 @@
 package com.codesqaude.cocomarco.domain.user;
 
+import com.codesqaude.cocomarco.domain.issue.model.Assignment;
 import com.codesqaude.cocomarco.domain.issue.model.Issue;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,6 +28,9 @@ public class User {
 
     @OneToMany(mappedBy = "writer")
     private List<Issue> issues = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Assignment> assignments = new ArrayList<>();
 
     private Long githubId;
     private String email;
