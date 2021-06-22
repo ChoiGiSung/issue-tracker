@@ -16,7 +16,13 @@ public class JasyptConfig {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(key);
+        config.setPoolSize(1);
         encryptor.setConfig(config);
         return encryptor;
+    }
+
+    public String encrypt(String password) {
+        StringEncryptor stringEncryptor = stringEncryptor();
+        return stringEncryptor.encrypt(password);
     }
 }

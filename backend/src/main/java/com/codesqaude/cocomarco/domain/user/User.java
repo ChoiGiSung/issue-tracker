@@ -32,8 +32,10 @@ public class User {
     private String email;
     private String name;
     private String avatarImage;
+    private String localId;
+    private String localPassword;
 
-    public User(String name, String avatarImage, Long githubId, String email) {
+    private User(String name, String avatarImage, Long githubId, String email) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.avatarImage = avatarImage;
@@ -41,8 +43,26 @@ public class User {
         this.email = email;
     }
 
+    private User(String localId, String localPassword) {
+        this.id = UUID.randomUUID();
+        this.localId = localId;
+        this.localPassword = localPassword;
+    }
+
+    public static User oAuthUser(String name, String avatarImage, Long githubId, String email) {
+        return new User(name, avatarImage, githubId, email);
+    }
+
+    public static User localUser(String localId, String localPassword) {
+        return new User(localId, localPassword);
+    }
+
     public boolean sameUser(UUID userId) {
         return id.equals(userId);
+    }
+
+    public boolean samePassWord(String localPassword) {
+        return this.localPassword.equals(localPassword);
     }
 
     public void addIssue(Issue issue) {

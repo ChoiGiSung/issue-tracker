@@ -25,7 +25,7 @@ public class GitUserInfo implements UserInfo {
 
     @Override
     public User toEntity() {
-        return new User(login, avatarUrl, id, email);
+        return User.oAuthUser(login, avatarUrl, id, email);
     }
 }
 

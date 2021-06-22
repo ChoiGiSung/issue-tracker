@@ -38,7 +38,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (Objects.isNull(authorization)) {
             throw new NotLoggedInException();
         }
-
         return authorization;
     }
 }
