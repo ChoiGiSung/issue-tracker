@@ -17,19 +17,21 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/libs-milestone'}
+    maven { url 'https://repo.spring.io/libs-milestone' }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.querydsl:querydsl-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.querydsl:querydsl-jpa'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:1.17"
 }
 

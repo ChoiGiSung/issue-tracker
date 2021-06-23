@@ -18,8 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
-    public static final UUID SAMPLE_UUID = UUID.fromString("3eb62438-9604-45f9-a183-b838d2123793");
-
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -38,6 +36,8 @@ public class User {
     private String avatarImage;
     private String localId;
     private String localPassword;
+    private int authCode;
+    private boolean authStatus;
 
     private User(String name, String avatarImage, Long githubId, String email) {
         this.id = UUID.randomUUID();
@@ -45,20 +45,22 @@ public class User {
         this.avatarImage = avatarImage;
         this.githubId = githubId;
         this.email = email;
+        this.authStatus = true;
     }
 
-    private User(String localId, String localPassword) {
+    private User(String localId, String localPassword, int authCode) {
         this.id = UUID.randomUUID();
         this.localId = localId;
         this.localPassword = localPassword;
+        this.authCode = authCode;
     }
 
     public static User oAuthUser(String name, String avatarImage, Long githubId, String email) {
         return new User(name, avatarImage, githubId, email);
     }
 
-    public static User localUser(String localId, String localPassword) {
-        return new User(localId, localPassword);
+    public static User localUser(String localId, String localPassword, int authCode) {
+        return new User(localId, localPassword, authCode);
     }
 
     public boolean sameUser(UUID userId) {
@@ -80,6 +82,14 @@ public class User {
         this.email = user.email;
     }
 
+    public boolean sameAuthCode(int code) {
+        return authCode == code;
+    }
+
+    public void changeStatus() {
+        this.authStatus = true;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -88,6 +98,5 @@ public class User {
                 ", avatarImage='" + avatarImage + '\'' +
                 '}';
     }
-
 
 }

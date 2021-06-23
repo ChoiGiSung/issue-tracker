@@ -25,4 +25,9 @@ public class JasyptConfig {
         StringEncryptor stringEncryptor = stringEncryptor();
         return stringEncryptor.encrypt(password);
     }
+
+    public String decrypt(String password) {
+        StringEncryptor stringEncryptor = stringEncryptor();
+        return stringEncryptor.decrypt(password);
+    }
 }

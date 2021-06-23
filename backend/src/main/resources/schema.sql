@@ -18,6 +18,8 @@ create table users
     email          varchar(100),
     avatar_image   varchar(300),
     local_id       varchar(100),
+    auth_code      int,
+    auth_status    TINYINT(1) default 0,
     local_password varchar(100)
 );
 

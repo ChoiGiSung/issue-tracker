@@ -33,6 +33,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorReason, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(org.springframework.validation.BindException.class)
+    public ResponseEntity<ErrorReason> notEmpty(org.springframework.validation.BindException e) {
+        ErrorReason errorReason = ErrorReason.of(ErrorCode.INVALID_INPUT_VALUE);
+        return new ResponseEntity<>(errorReason, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorReason> uncontrolledException(Exception e) {
         e.printStackTrace();

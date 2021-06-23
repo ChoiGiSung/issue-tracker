@@ -14,6 +14,7 @@ import com.codesqaude.cocomarco.domain.user.dto.UserLoginRequest;
 import com.codesqaude.cocomarco.domain.user.dto.UserResponse;
 import com.codesqaude.cocomarco.domain.user.dto.UserWrapper;
 import com.codesqaude.cocomarco.util.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -75,23 +77,22 @@ public class UserService {
         return userRepository.save(user).getId();
     }
 
-
     @Transactional
-    public JwtResponse localJoin(UserLoginRequest userLoginRequest) {
+    public void localJoin(UserLoginRequest userLoginRequest, int authCode) {
         Optional<User> DBUser = userRepository.findByLocalId(userLoginRequest.getLocalId());
         if (DBUser.isPresent()) {
             throw new DuplicateLocalUserId();
         }
-        User user = User.localUser(userLoginRequest.getLocalId(), jasyptConfig.encrypt(userLoginRequest.getLocalPassword()));
-        return new JwtResponse(JwtUtils.create(userRepository.save(user).getId()));
+        User user = User.localUser(userLoginRequest.getLocalId(), jasyptConfig.encrypt(userLoginRequest.getLocalPassword()), authCode);
+        userRepository.save(user);
     }
 
     public JwtResponse localLogin(UserLoginRequest userLoginRequest) {
-        User user = userRepository.findByLocalId(userLoginRequest.getLocalId()).orElseThrow(NotFoundUserException::new);
-        if (user.samePassWord(jasyptConfig.encrypt(userLoginRequest.getLocalPassword()))) {
-            throw new NoPermissionUserException();
+        User user = userRepository.findByLocalIdAndAuthStatusTrue(userLoginRequest.getLocalId()).orElseThrow(NotFoundUserException::new);
+        if (jasyptConfig.decrypt(user.getLocalPassword()).equals(userLoginRequest.getLocalPassword())) {
+            return new JwtResponse(JwtUtils.create(user.getId()));
         }
-        return new JwtResponse(JwtUtils.create(user.getId()));
+        throw new NoPermissionUserException();
     }
 
     public UserWrapper findAll(Pageable pageable) {
@@ -100,8 +101,13 @@ public class UserService {
         return new UserWrapper(userResponses);
     }
 
-    public void localLogout() {
-        
-
+    @Transactional
+    public void activateLocalUser(String id, int code) {
+        User user = userRepository.findByLocalId(id).orElseThrow(NotFoundUserException::new);
+        if (user.sameAuthCode(code)) {
+            user.changeStatus();
+            return;
+        }
+        throw new NoPermissionUserException();
     }
 }
