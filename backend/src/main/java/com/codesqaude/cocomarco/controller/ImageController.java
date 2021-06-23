@@ -1,5 +1,6 @@
 package com.codesqaude.cocomarco.controller;
 
+import com.codesqaude.cocomarco.domain.ImageResponse;
 import com.codesqaude.cocomarco.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class ImageController {
     private final static String S3_DIRECTORY_NAME = "static";
 
     @PostMapping
-    public String upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
+    public ImageResponse upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
         return imageService.upload(multipartFile, S3_DIRECTORY_NAME);
     }
 }
