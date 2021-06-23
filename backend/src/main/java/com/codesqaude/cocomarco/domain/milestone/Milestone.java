@@ -49,6 +49,7 @@ public class Milestone {
         issues.add(issue);
     }
 
+    @PreRemove
     public void delete() {
         for (Issue issue : issues) {
             issue.deleteMilestone();
