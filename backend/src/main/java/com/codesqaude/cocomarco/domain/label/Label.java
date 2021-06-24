@@ -19,7 +19,7 @@ public class Label {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "label")
+    @OneToMany(mappedBy = "label", cascade = CascadeType.ALL)
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String title;
@@ -37,4 +37,5 @@ public class Label {
         this.hexCode = label.hexCode;
         this.detail = label.detail;
     }
+
 }

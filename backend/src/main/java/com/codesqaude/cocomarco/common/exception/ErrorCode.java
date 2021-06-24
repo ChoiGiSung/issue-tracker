@@ -19,6 +19,8 @@ public enum ErrorCode {
      */
     NO_PERMISSION_USER(403, "해당 권한이 없습니다."),
     NOT_LOGGED_IN(401, "로그인 되어있지 않습니다."),
+    DUPLICATE_LOCAL_USER_ID(409, "중복된 id입니다. 체크해 주세요."),
+    INVALID_INPUT_VALUE(404, "옳지 않은 입력값 입니다."),
 
     /**
      * JWT 시간 오류
@@ -27,6 +29,7 @@ public enum ErrorCode {
 
 
     INTERNAL_SERVER_ERROR(500, "서버에러 입니다.");
+
 
     private int httpStatus;
     private String message;

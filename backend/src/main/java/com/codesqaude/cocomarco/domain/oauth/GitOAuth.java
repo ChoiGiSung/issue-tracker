@@ -2,12 +2,11 @@ package com.codesqaude.cocomarco.domain.oauth;
 
 import com.codesqaude.cocomarco.domain.oauth.dto.AccessToken;
 import com.codesqaude.cocomarco.domain.oauth.dto.AccessTokenRequest;
-import org.springframework.beans.factory.annotation.Value;
+import com.codesqaude.cocomarco.service.GitOAuthType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -15,16 +14,15 @@ import java.util.Collections;
 import static com.codesqaude.cocomarco.domain.oauth.GitOauthUri.ACCESS_TOKEN_URI;
 import static com.codesqaude.cocomarco.domain.oauth.GitOauthUri.USER_INFO_URI;
 
-@Component
 public class GitOAuth implements OAuth {
 
     private final String clientId;
     private final String clientSecret;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public GitOAuth(@Value("${github.desktop.client.id}") String clientId, @Value("${github.desktop.secret}") String clientSecret) {
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
+    public GitOAuth(GitOAuthType type) {
+        this.clientId = type.getClientId();
+        this.clientSecret = type.getClientSecret();
     }
 
     @Override

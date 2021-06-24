@@ -36,11 +36,16 @@ public class IssueLabel {
         this.issue = issue;
     }
 
+    public void deleteLabel() {
+        label = null;
+    }
+
     @Override
     public String toString() {
         return "IssueLabel{" +
                 "id=" + id +
                 '}';
     }
+
 
 }

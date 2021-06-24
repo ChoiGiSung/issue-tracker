@@ -48,4 +48,11 @@ public class Milestone {
     public void addIssue(Issue issue) {
         issues.add(issue);
     }
+
+    @PreRemove
+    public void delete() {
+        for (Issue issue : issues) {
+            issue.deleteMilestone();
+        }
+    }
 }

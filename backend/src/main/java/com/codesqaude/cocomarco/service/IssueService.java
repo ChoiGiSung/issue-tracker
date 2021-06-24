@@ -43,8 +43,11 @@ public class IssueService {
         User writer = userRepository.findById(writerId).orElseThrow(NotFoundUserException::new);
         List<User> assignees = userRepository.findAllById(issueRequest.getUserIds());
         List<Label> labels = labelRepository.findAllById(issueRequest.getLabels());
-        Milestone milestone = milestoneRepository.findById(issueRequest.getMilestone()).orElseThrow(NotFoundMilestoneException::new);
-
+        //todo null 처리
+        Milestone milestone = null;
+        if (issueRequest.getMilestone() != null) {
+            milestone = milestoneRepository.findById(issueRequest.getMilestone()).orElseThrow(NotFoundMilestoneException::new);
+        }
         List<IssueLabel> issueLabels = labels.stream().map(IssueLabel::createIssueLabel).collect(Collectors.toList());
         List<Assignment> assignments = assignees.stream().map(Assignment::createAssignment).collect(Collectors.toList());
 

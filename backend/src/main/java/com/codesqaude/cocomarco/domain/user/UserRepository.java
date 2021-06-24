@@ -9,4 +9,8 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByGithubId(Long id);
+
+    Optional<User> findByLocalId(String localId);
+
+    Optional<User> findByLocalIdAndAuthStatusTrue(String localId);
 }
