@@ -15,7 +15,6 @@ public class MailService {
     @Async
     public void sendMail(String email, int code) {
         SimpleMailMessage simpleMessage = new SimpleMailMessage();
-        // simpleMessage.setFrom("보낸사람@naver.com"); // NAVER, DAUM, NATE일 경우 넣어줘야 함
         simpleMessage.setTo(email);
         simpleMessage.setSubject("이메일 인증");
         simpleMessage.setText("인증번호:" + code);

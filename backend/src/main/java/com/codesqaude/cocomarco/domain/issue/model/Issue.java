@@ -53,10 +53,21 @@ public class Issue {
         this.text = text;
     }
 
+    public static Issue createIssue(User writer, String title, String text, @Nullable List<Assignment> assignments, @Nullable List<IssueLabel> issueLabels, @Nullable Milestone milestone) {
+        Issue issue = new Issue(title, text);
+        issue.setWriter(writer);
+        issue.setMilestone(milestone);
+        issue.changeAssignment(assignments);
+        issue.changeIssueLabels(issueLabels);
+        issue.status = IssueStatus.OPEN;
+        issue.writingTime = LocalDateTime.now();
+
+        return issue;
+    }
+
     //연관 관계 메소드
     public void setWriter(User writer) {
         this.writer = writer;
-        writer.addIssue(this);
     }
 
     public void changeAssignment(List<Assignment> assignments) {
@@ -77,7 +88,6 @@ public class Issue {
 
     public void setMilestone(Milestone milestone) {
         this.milestone = milestone;
-        milestone.addIssue(this);
     }
 
     public void deleteMilestone() {
@@ -94,18 +104,6 @@ public class Issue {
 
     public void changeMilestone(Milestone milestone) {
         this.milestone = milestone;
-    }
-
-    public static Issue createIssue(User writer, String title, String text, @Nullable List<Assignment> assignments, @Nullable List<IssueLabel> issueLabels, @Nullable Milestone milestone) {
-        Issue issue = new Issue(title, text);
-        issue.setWriter(writer);
-        issue.setMilestone(milestone);
-        issue.changeAssignment(assignments);
-        issue.changeIssueLabels(issueLabels);
-        issue.status = IssueStatus.OPEN;
-        issue.writingTime = LocalDateTime.now();
-
-        return issue;
     }
 
     public boolean isSameWriter(User user) {
