@@ -36,7 +36,7 @@ public class User {
     private String avatarImage;
     private String localId;
     private String localPassword;
-    private int authCode;
+    private Integer authCode;
     private boolean authStatus;
 
     private User(String name, String avatarImage, Long githubId, String email) {
