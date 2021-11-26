@@ -1,5 +1,4 @@
-use
-issue_tracker;
+
 
 drop TABLE IF EXISTS assignment;
 drop TABLE IF EXISTS comment;
