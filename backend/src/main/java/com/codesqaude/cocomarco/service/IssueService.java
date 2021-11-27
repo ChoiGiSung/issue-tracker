@@ -39,7 +39,7 @@ public class IssueService {
 
 
     @Transactional
-    public void create(IssueRequest issueRequest, UUID writerId) {
+    public Long create(IssueRequest issueRequest, UUID writerId) {
         User writer = userRepository.findById(writerId).orElseThrow(NotFoundUserException::new);
         List<User> assignees = userRepository.findAllById(issueRequest.getUserIds());
         List<Label> labels = labelRepository.findAllById(issueRequest.getLabels());
@@ -53,7 +53,7 @@ public class IssueService {
 
         Issue issue = Issue.createIssue(writer, issueRequest.getTitle(), issueRequest.getText(), assignments, issueLabels, milestone);
 
-        issueRepository.save(issue);
+        return issueRepository.save(issue).getId();
     }
 
     public IssueDetailResponse showDetail(Long issueId) {
